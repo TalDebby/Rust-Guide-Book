@@ -38,6 +38,15 @@ fn main() {
     // let s3 = takes_and_gives_back(s2); // s2 is moved into takes_and_gives_back,
     // // which also moves its return value into s3
     // // value into s1
+
+    // 6. References and Borrowing
+    // let s1 = String::from("hello");
+    // let len = calculate_length(&s1);
+
+    // println!("The length of '{s1}' is {len}");
+
+    // 7. dangaling references
+    // let reference_to_nothing = dangle();
 }
 
 // 4.
@@ -60,4 +69,18 @@ fn main() {
 
 // fn takes_and_gives_back(a_string: String) -> String {
 //     a_string
+// }
+
+// 6.
+// fn calculate_length(s: &String) -> usize {
+//     // s is a reference to a String
+//     s.len()
+// } // Here, s goes out of scope. But because s does not have ownership of what
+// // it refers to, the String is not dropped.
+
+// 7.
+// fn dangle() -> &String {
+//     let s = String::from("hello");
+
+//     &s
 // }
