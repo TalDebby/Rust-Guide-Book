@@ -1,3 +1,5 @@
+use std::vec;
+
 fn explicit_vector() -> Vec<i32>{
     let v: Vec<i32> = Vec::new();
     v
@@ -73,3 +75,39 @@ fn spread_sheet() {
         SpreadSheetCell::Float(3.141592),
     ];
 }
+
+
+pub fn median(vec: &Vec<i32>) -> i32 {
+    let vec = &mut vec.clone();
+    
+    return  KthSmallest(vec, 0, vec.len() - 1, (vec.len() + 1) / 2);
+}
+
+fn KthSmallest(vec: &mut Vec<i32>, low: usize, high: usize, k: usize) -> i32 {
+    let partitionLoc = partition(vec, low, high);
+
+    if partitionLoc == k - 1 {
+        return vec[partitionLoc];
+    } else if partitionLoc < k - 1 {
+        return  KthSmallest(vec, partitionLoc + 1, high, k);
+    } else {
+        return KthSmallest(vec, low, partitionLoc - 1, k);
+    }
+}
+
+fn partition(vec: &mut Vec<i32>, low: usize, high: usize) -> usize {
+    let pivot = vec[high];
+    let mut pivotloc = low;
+
+    for i in low..high {
+        if vec[i] < pivot {
+            vec.swap(i, pivotloc);
+            pivotloc += 1;
+        }
+    }
+
+    vec.swap(pivotloc, high);
+    
+    return pivotloc;
+}
+      
