@@ -48,10 +48,22 @@ impl Config {
             return Err("not enough arguments");
         }
 
-        let query = args[1].clone();
-        let file_path = args[2].clone();
+        let query: String;
+        let file_path: String;
+        let mut ignore_case = env::var("IGNORE_CASE").is_ok();
 
-        let ignore_case = env::var("IGNORE_CASE").is_ok();
+        if args[1] == "--i" || args[1] == "--ignore-case" {
+            if args.len() < 4 {
+                return Err("not enough arguments");
+            }
+
+            ignore_case = true;
+            query = args[2].clone();
+            file_path = args[3].clone();
+        } else {
+            query = args[1].clone();
+            file_path = args[2].clone();
+        }
 
         Ok(Config {
             query: query,
